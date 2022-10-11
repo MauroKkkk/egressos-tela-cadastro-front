@@ -1,13 +1,19 @@
 import React from 'react';
+import NavMenu from './NavBar';
 
-function Hero({handleLogout}){
+function Hero(props){
+
     return(
+        <>
+        <NavMenu/>
         <div className='Hero'>
             <nav>
-                <h2>Welcome</h2>
-                <button onClick={handleLogout}>Logout</button>
+                <h3>123123</h3>
+                <h3>{props.email}</h3>
+                <button onClick={props.handleLogout}>Logout</button>
             </nav>
         </div>
+        </>
     )
 }
 export default Hero;

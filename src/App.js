@@ -4,9 +4,8 @@ import NavMenu from './components/NavBar';
 import Login from './components/Login';
 import { useState, useEffect } from 'react';
 import Hero from './components/Hero';
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, OAuthProvider, FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import fire from './components/fire'
-
 
 
 function App() {
@@ -16,18 +15,37 @@ function App() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const auth = getAuth();
+  const provider = new OAuthProvider('microsoft.com');
+  provider.addScope('mail.read');
+const microsoft  = () => {
 
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    const credential = OAuthProvider.credentialFromResult(result);
+    setEmail('ggg')
+    const accessToken = credential.accessToken;
+    const idToken = credential.idToken;
+  })
+  .catch((error) => {
+    alert(error.code)
+  });
+}
+  const facebook = () => {
 
+    signInWithPopup(auth, new FacebookAuthProvider())
+      .then((res) => console.log(res))
+      .catch((err) => setEmail(err.code))
 
+  }
 
   const google = () => {
-    setLoading(true)
+
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((res) => console.log(res))
       .catch((err) =>setEmail(err.code))
-      .finally(() => setLoading(false))
+
   }
 
 
@@ -116,7 +134,7 @@ function App() {
   return (
     <>
     {user !== ''? (
-      <Hero handleLogout={handleLogout}/>
+      <Hero email={email}  handleLogout={handleLogout}/>
     ) : (
       <>
       <NavMenu/>
@@ -132,6 +150,8 @@ function App() {
         emailError={emailError} 
         passwordError={passwordError}
         google={google}
+        facebook={facebook}
+        microsoft={microsoft}
       />
       </>
     )}

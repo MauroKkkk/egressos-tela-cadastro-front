@@ -14,7 +14,6 @@ padding: 0 7px;
 .loginIcons li a{
     font-size: 30px;
     height: 35px;
-
     display: flex;
     align-items: center; 
     text-decoration: none;

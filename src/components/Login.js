@@ -1,6 +1,6 @@
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { BsLinkedin } from 'react-icons/bs';
+import { BsMicrosoft } from 'react-icons/bs';
 import './loginredes.css'
 import React from 'react';
 
@@ -10,7 +10,7 @@ import React from 'react';
 import "./Login.css";
 
 function Login(props) {
-  const {email, setEmail, password, setPassword, handleLogin, handleSingup, hasAccount, setHasAccount, emailError, google} = props;
+  const {email, setEmail, password, setPassword, handleLogin, handleSingup, hasAccount, setHasAccount, emailError, google, facebook, microsoft} = props;
 
   return (
         <div className="wrap-login">
@@ -45,7 +45,7 @@ function Login(props) {
                   <button className="login-form-btn" onClick={handleLogin}>Sign in</button>
                   <div className="text-center">
                     <span className="txt1">Não possui conta? </span>
-                    <span onClick={()=> setHasAccount(!hasAccount)} className="txt2">
+                    <span style={{cursor:'pointer'}} onClick={()=> setHasAccount(!hasAccount)} className="txt2">
                       Criar conta
                     </span>
 
@@ -56,7 +56,7 @@ function Login(props) {
                   <button className="login-form-btn" onClick={handleSingup}>Sing up</button>
                   <div className="text-center">
                     <span className="txt1">Possui conta? </span>
-                    <span onClick={()=> setHasAccount(!hasAccount)} className="txt2">
+                    <span style={{cursor:'pointer'}} onClick={()=> setHasAccount(!hasAccount)} className="txt2">
                       Login
                     </span>
 
@@ -68,13 +68,13 @@ function Login(props) {
             <h5>Outras opçoes de login:</h5>
             <ul className="loginIcons">
                 <li>
-                  <span><FaFacebookSquare/></span>
+                  <span onClick={facebook}><FaFacebookSquare style={{width:30,height:50, color:'#3E5D9E', cursor:'pointer'}}/></span>
                 </li>
                 <li>
-                  <span onClick={google}><FcGoogle/></span>
+                  <span onClick={google}><FcGoogle style={{width:30,height:50,cursor:'pointer'}}/></span>
                 </li>
                 <li>
-                  <span><BsLinkedin/></span>
+                  <span onClick={microsoft}><BsMicrosoft style={{width:30,height:50, color:'#0077B7',cursor:'pointer'}}/></span>
                 </li>
 
             </ul>
