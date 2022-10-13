@@ -18,13 +18,13 @@ function App() {
 
   const auth = getAuth();
   const provider = new OAuthProvider('microsoft.com');
-  provider.addScope('mail.read');
+
+  
 const microsoft  = () => {
 
   signInWithPopup(auth, provider)
   .then((result) => {
     const credential = OAuthProvider.credentialFromResult(result);
-    setEmail('ggg')
     const accessToken = credential.accessToken;
     const idToken = credential.idToken;
   })
@@ -137,7 +137,9 @@ const microsoft  = () => {
       <Hero email={email}  handleLogout={handleLogout}/>
     ) : (
       <>
+      <div className='body'>
       <NavMenu/>
+
       <Login
         email={email} 
         setEmail={setEmail} 
@@ -153,6 +155,8 @@ const microsoft  = () => {
         facebook={facebook}
         microsoft={microsoft}
       />
+      </div>
+
       </>
     )}
 

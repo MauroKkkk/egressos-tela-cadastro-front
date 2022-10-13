@@ -1,6 +1,7 @@
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { BsMicrosoft } from 'react-icons/bs';
+import { BsLinkedin } from 'react-icons/bs';
 import './loginredes.css'
 import React from 'react';
 
@@ -76,7 +77,6 @@ function Login(props) {
                 <li>
                   <span onClick={microsoft}><BsMicrosoft style={{width:30,height:50, color:'#0077B7',cursor:'pointer'}}/></span>
                 </li>
-
             </ul>
 
             

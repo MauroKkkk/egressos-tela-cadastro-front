@@ -12,7 +12,7 @@ function NavMenu() {
   return (
     <>
       {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="mb-3">
+        <Navbar key={expand}  expand={expand} className="mb-3">
           <Container fluid style={{padding:0,margin:0}}>
             <Navbar.Brand href="https://youtube.com" style={{color:'black', fontSize:29 , fontWeight:600}}><img src={If} alt='Logo Ifal' style={{marginLeft:30}} width='35' height='50' className='d-inline-block align-top'/>{' '}Desing de Interiores</Navbar.Brand>
             <Navbar.Toggle style={{marginRight:10}} aria-controls={`offcanvasNavbar-expand-${expand}`} />
