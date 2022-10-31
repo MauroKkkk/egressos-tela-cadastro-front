@@ -15,6 +15,9 @@ function App() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
+  const [face, setFace] = useState(false)
+  const [goog, setGoog] = useState(false)
+  const [micro, setMicro] = useState(false)
 
   const auth = getAuth();
   const provider = new OAuthProvider('microsoft.com');
@@ -24,6 +27,7 @@ const microsoft  = () => {
 
   signInWithPopup(auth, provider)
   .then((result) => {
+    setMicro(true)
     const credential = OAuthProvider.credentialFromResult(result);
     const accessToken = credential.accessToken;
     const idToken = credential.idToken;
@@ -33,17 +37,22 @@ const microsoft  = () => {
   });
 }
   const facebook = () => {
-
     signInWithPopup(auth, new FacebookAuthProvider())
-      .then((res) => console.log(res))
-      .catch((err) => setEmail(err.code))
+      .then((res) => {
+        console.log(res)
+        setFace(true)
+      })
+        .catch((err) => setEmail(err.code))
 
   }
 
   const google = () => {
 
     signInWithPopup(auth, new GoogleAuthProvider())
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+        setGoog(true)
+      })
       .catch((err) =>setEmail(err.code))
 
   }
@@ -134,7 +143,12 @@ const microsoft  = () => {
   return (
     <>
     {user !== ''? (
-      <Hero email={email}  handleLogout={handleLogout}/>
+      <Hero  
+        email={email}  
+        face={face}         
+        goog={goog}
+        micro={micro}
+        handleLogout={handleLogout}/>
     ) : (
       <>
       <div className='body'>
