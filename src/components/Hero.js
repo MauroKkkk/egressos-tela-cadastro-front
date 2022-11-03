@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Hero(props){
-    const {face} = props
+    const {face, micro, goog, idToken} = props
     const [email, setEmail] = useState('')
     const [gender,setGender] = useState('')
     const [birthday, setBirthday] = useState('')
@@ -15,9 +15,26 @@ function Hero(props){
     const [re, setRe] = useState(false)
     console.log({face})
 
-    if(re === false && face === true)
-    axios.get('')
-    .then(response=>{
+    if(re === false && face === true){
+      axios.get('')
+      .then(response=>{
+          setEmail(response.data.email)
+          setName(response.data.name)
+          setBirthday(response.data.birthday)
+          setPicture(response.data.picture.data.url)
+          setHometown(response.data.city)
+          setGender(response.data.gender)
+          setRe(true)
+          console.log(re)
+          
+      })
+      .catch((e) =>{
+          console.log(e)
+      })
+    }else if(re === false && micro === true){
+      axios.get(`https://graph.microsoft.com/v1.0/user/${idToken}`)
+      .then(response=>{
+        console.log(response.data)
         setEmail(response.data.email)
         setName(response.data.name)
         setBirthday(response.data.birthday)
@@ -25,12 +42,9 @@ function Hero(props){
         setHometown(response.data.hometown.name)
         setGender(response.data.gender)
         setRe(true)
-        console.log(re)
-        
-    })
-    .catch((e) =>{
-        console.log(e)
-    })
+      })
+    }
+
     return(
         <>
         <NavMenu/>

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
-    apiKey: "MAIzaSyBz4Atv2iDwz93P-DoB6mB6J5ZCdqgXh9c",
+    apiKey: "AIzaSyBz4Atv2iDwz93P-DoB6mB6J5ZCdqgXh9c",
     authDomain: "pivotal-cistern-364620.firebaseapp.com",
     projectId: "pivotal-cistern-364620",
     storageBucket: "pivotal-cistern-364620.appspot.com",

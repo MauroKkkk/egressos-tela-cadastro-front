@@ -18,11 +18,10 @@ function App() {
   const [face, setFace] = useState(false)
   const [goog, setGoog] = useState(false)
   const [micro, setMicro] = useState(false)
-
+  const [idToken, setAccessToken] = useState('')
   const auth = getAuth();
   const provider = new OAuthProvider('microsoft.com');
 
-  
 const microsoft  = () => {
 
   signInWithPopup(auth, provider)
@@ -30,7 +29,10 @@ const microsoft  = () => {
     setMicro(true)
     const credential = OAuthProvider.credentialFromResult(result);
     const accessToken = credential.accessToken;
+    setAccessToken(credential.accessToken)
+    console.log(accessToken)
     const idToken = credential.idToken;
+    console.log(idToken)
   })
   .catch((error) => {
     alert(error.code)
@@ -147,6 +149,7 @@ const microsoft  = () => {
         email={email}  
         face={face}         
         goog={goog}
+        idToken={idToken}
         micro={micro}
         handleLogout={handleLogout}/>
     ) : (
