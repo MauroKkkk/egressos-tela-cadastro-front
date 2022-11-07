@@ -1,187 +1,159 @@
 import './App.css';
 import React from 'react';
 import NavMenu from './components/NavBar';
-import Login from './components/Login';
+import Cadastro from './components/Cadastro';
 import { useState, useEffect } from 'react';
-import Hero from './components/Hero';
+import axios from 'axios';
+import Hero from './components/Profile';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword, signInWithPopup, OAuthProvider, FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import fire from './components/fire'
+import Login from './components/Login'
+import Profile from './components/Profile';
+
 
 
 function App() {
-  const [user, setUser] = useState('');
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [hasAccount, setHasAccount] = useState(false);
-  const [face, setFace] = useState(false)
-  const [goog, setGoog] = useState(false)
-  const [micro, setMicro] = useState(false)
-  const [idToken, setAccessToken] = useState('')
-  const auth = getAuth();
-  const provider = new OAuthProvider('microsoft.com');
+//   const [user, setUser] = useState('');
 
-const microsoft  = () => {
+//   const [emailError, setEmailError] = useState('');
+//   const [passwordError, setPasswordError] = useState('');
+//   const [hasAccount, setHasAccount] = useState(false);
+//   const [face, setFace] = useState(false)
+//   const [goog, setGoog] = useState(false)
+//   const [micro, setMicro] = useState(false)
+//   const [idToken, setAccessToken] = useState('')
+//   const auth = getAuth();
+//   const provider = new OAuthProvider('microsoft.com');
 
-  signInWithPopup(auth, provider)
-  .then((result) => {
-    setMicro(true)
-    const credential = OAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
-    setAccessToken(credential.accessToken)
-    console.log(accessToken)
-    const idToken = credential.idToken;
-    console.log(idToken)
-  })
-  .catch((error) => {
-    alert(error.code)
-  });
-}
-  const facebook = () => {
-    signInWithPopup(auth, new FacebookAuthProvider())
-      .then((res) => {
-        console.log(res)
-        setFace(true)
-      })
-        .catch((err) => setEmail(err.code))
+// const microsoft  = () => {
 
-  }
+//   signInWithPopup(auth, provider)
+//   .then((result) => {
+//     setMicro(true)
+//     const credential = OAuthProvider.credentialFromResult(result);
+//     const accessToken = credential.accessToken;
+//     setAccessToken(credential.accessToken)
+//     console.log(accessToken)
+//     const idToken = credential.idToken;
+//     console.log(idToken)
+//   })
+//   .catch((error) => {
+//     alert(error.code)
+//   });
+// }
+//   const facebook = () => {
+//     signInWithPopup(auth, new FacebookAuthProvider())
+//       .then((res) => {
+//         console.log(res)
+//         setFace(true)
+//       })
+//         .catch((err) => setEmail(err.code))
 
-  const google = () => {
+//   }
 
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((res) => {
-        console.log(res)
-        setGoog(true)
-      })
-      .catch((err) =>setEmail(err.code))
+//   const google = () => {
 
-  }
+//     signInWithPopup(auth, new GoogleAuthProvider())
+//       .then((res) => {
+//         console.log(res)
+//         setGoog(true)
+//       })
+//       .catch((err) =>setEmail(err.code))
 
+//   }
 
 
-  const clearInputs = () => {
-    setEmail('');
-    setPassword('');
-  }
 
-  const clearErrors = () => {
-    setEmailError('');
-    setPasswordError('');
-  }
+//   const clearInputs = () => {
+//     setEmail('');
+//     setPassword('');
+//   }
 
-  const handleLogin = () => {
-    clearErrors();
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      clearInputs()
-      clearErrors();
-      setUser(userCredential.user);
-      // ...
-    })
-    .catch((error) => {
+//   const clearErrors = () => {
+//     setEmailError('');
+//     setPasswordError('');
+//   }
 
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage, errorCode)
-      clearInputs()
-      clearErrors();
-    });
-  }
-  const handleSingup = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in
-    setUser(userCredential.user);
-    clearInputs()
-    clearErrors();
-    // ...
-  })
-  .catch((error) => {
+//   const handleLogin = () => {
+//     clearErrors();
+//     signInWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       clearInputs()
+//       clearErrors();
+//       setUser(userCredential.user);
+//       // ...
+//     })
+//     .catch((error) => {
 
-    setUser('')
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(errorMessage, errorCode)
-    clearInputs()
-    clearErrors();
-    // ..
-  });
-  }
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      setUser('')
-      clearInputs()
-      clearErrors();
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage, errorCode)
-      clearInputs()
-      clearErrors();
-    });
-  }
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       alert(errorMessage, errorCode)
+//       clearInputs()
+//       clearErrors();
+//     });
+//   }
+//   const handleSingup = () => {
+//     createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed in
+//     setUser(userCredential.user);
+//     clearInputs()
+//     clearErrors();
+//     // ...
+//   })
+//   .catch((error) => {
 
-  const authListener = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        setUser(uid)
-        clearInputs()
-        clearErrors();
+//     setUser('')
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     alert(errorMessage, errorCode)
+//     clearInputs()
+//     clearErrors();
+//     // ..
+//   });
+//   }
+//   const handleLogout = () => {
+//     signOut(auth).then(() => {
+//       setUser('')
+//       clearInputs()
+//       clearErrors();
+//     }).catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       alert(errorMessage, errorCode)
+//       clearInputs()
+//       clearErrors();
+//     });
+//   }
 
-      } else {
-        setUser('')
-      }
-    });
-  }
+//   const authListener = () => {
+//     onAuthStateChanged(auth, (user) => {
+//       if (user) {
+//         const uid = user.uid;
+//         setUser(uid)
+//         clearInputs()
+//         clearErrors();
 
-  useEffect(() =>{
-    authListener();
-  })
+//       } else {
+//         setUser('')
+//       }
+//     });
+//   }
+
+//   useEffect(() =>{
+//     authListener();
+//   })
 
 
   return (
-    <>
-    {user !== ''? (
-      <Hero  
-        email={email}  
-        face={face}         
-        goog={goog}
-        idToken={idToken}
-        micro={micro}
-        handleLogout={handleLogout}/>
-    ) : (
-      <>
-      <div className='body'>
-      <NavMenu/>
-
-      <Login
-        email={email} 
-        setEmail={setEmail} 
-        password={password} 
-        setPassword={setPassword} 
-        handleLogin={handleLogin}  
-        handleSingup={handleSingup} 
-        hasAccount={hasAccount} 
-        setHasAccount={setHasAccount} 
-        emailError={emailError} 
-        passwordError={passwordError}
-        google={google}
-        facebook={facebook}
-        microsoft={microsoft}
-      />
-      </div>
-
-      </>
-    )}
-
-
-
-
-
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/Cadastro" element={<Cadastro/>}/>
+        <Route path="/Login" element={<Login/>}/>
+        <Route path="/Profile" element={<Profile/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;

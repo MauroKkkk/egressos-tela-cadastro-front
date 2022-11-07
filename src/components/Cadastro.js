@@ -1,7 +1,7 @@
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { BsMicrosoft } from 'react-icons/bs';
-import { useState } from 'react'
+import { useState } from 'react';
 import './loginredes.css'
 import React from 'react';
 import NavBar from './NavBar'
@@ -9,29 +9,29 @@ import {Link} from 'react-router-dom'
 
 
 
-
-import "./Login.css";
+import "./Cadastro.css";
 import axios from 'axios';
 
 
 
-function Login() {
+function Cadastro(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const submitLogin = () => {
+
+  const submitCadastro = () => {
     console.log(email, password)
-    axios.post("http://localhost:3001/api/login", {
+    axios.post("http://localhost:3001/api/insert", {
       password: password,
       email: email,
-    }).then(() => {
+    })
+    .then(() => {
       alert("successful to insert")
-    }).catch((err) => {
-      console.log(err)
     })
   }
+
   return (
     <>
-      <NavBar/>
+    <NavBar/>
         <div className="wrap-login">
           <div className="login-form">
             <span className="login-form-title"> Egressos </span>
@@ -58,14 +58,13 @@ function Login() {
             </div>
 
             <div className="container-login-form-btn">
-                  <button className="login-form-btn" onClick={submitLogin()}>Sign in</button>
-                  <div className="text-center">
-                    <span className="txt1">Não possui conta? </span>
-                    <Link to="/Cadastro" style={{cursor:'pointer'}} className="txt2">
-                      Criar conta
-                    </Link>
-
-                  </div>
+              <button className="login-form-btn" onClick={() => submitCadastro()}>Sing up</button>
+              <div className="text-center">
+                <span className="txt1">Possui conta? </span>
+                <Link to="/Login"style={{cursor:'pointer'}} className="txt2">
+                  Login
+                </Link>
+              </div>
             </div>
             <h5>Outras opçoes de login:</h5>
             <ul className="loginIcons">
@@ -88,4 +87,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Cadastro;

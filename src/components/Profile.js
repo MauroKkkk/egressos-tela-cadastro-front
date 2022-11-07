@@ -3,8 +3,9 @@ import React from 'react';
 import NavMenu from './NavBar';
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
-function Hero(props){
+function Profile(props){
     const {face, micro, goog, idToken} = props
     const [email, setEmail] = useState('')
     const [gender,setGender] = useState('')
@@ -63,4 +64,4 @@ function Hero(props){
         </>
     )
 }
-export default Hero;
+export default Profile;
