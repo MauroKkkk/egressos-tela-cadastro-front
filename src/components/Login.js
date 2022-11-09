@@ -18,15 +18,15 @@ import axios from 'axios';
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const submitLogin = () => {
     console.log(email, password)
-    axios.post("http://localhost:3001/api/login", {
-      password: password,
+    axios.post("http://localhost:3001/login", {
       email: email,
-    }).then(() => {
+      password: password,
+    })
+    .then(() => {
       alert("successful to insert")
-    }).catch((err) => {
-      console.log(err)
     })
   }
   return (
@@ -58,7 +58,7 @@ function Login() {
             </div>
 
             <div className="container-login-form-btn">
-                  <button className="login-form-btn" onClick={submitLogin()}>Sign in</button>
+                  <button className="login-form-btn" onClick={() => submitLogin()}>Sign in</button>
                   <div className="text-center">
                     <span className="txt1">Não possui conta? </span>
                     <Link to="/Cadastro" style={{cursor:'pointer'}} className="txt2">

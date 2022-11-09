@@ -20,9 +20,9 @@ function Cadastro(props) {
 
   const submitCadastro = () => {
     console.log(email, password)
-    axios.post("http://localhost:3001/api/insert", {
-      password: password,
+    axios.post("http://localhost:3001/cadastro", {
       email: email,
+      password: password,
     })
     .then(() => {
       alert("successful to insert")
