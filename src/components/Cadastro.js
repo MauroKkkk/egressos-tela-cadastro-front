@@ -7,38 +7,65 @@ import React from 'react';
 import NavBar from './NavBar'
 import {Link} from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars-2'
-
-
-
+import fire from './fire'
+import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth';
 import "./Cadastro.css";
 import axios from 'axios';
 
 
 
-function Cadastro(props) {
+function Cadastro() {
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [date, setDate] = useState("");
   const [cep, setCep] = useState("");
-  const [wcep, setWcep] = useState("");
+  const [wcep, setWcep] = useState(""); //
   const [institution, setInstitution] = useState("");
   const [courseName, setCourseName] = useState("");
-  const [dateIn, setDateIn] = useState("");
-  const [dateOut, setDateOut] = useState("");
+  const [dateIn, setDateIn] = useState("");///
+  const [dateOut, setDateOut] = useState(""); ///
   const [acting, setActing] = useState("");
-  const [workCNPJ, setWorkCNPJ] = useState("");
+  const [workCNPJ, setWorkCNPJ] = useState("");//
+  const auth = getAuth();
 
+  const facebook = () => {
+    signInWithPopup(auth, new FacebookAuthProvider())
+      .then((res) => {
+        axios.get('https://graph.facebook.com/v15.0/me?fields=name%2Cemail%2Cbirthday&access_token=EAAGBvnAFUZCUBAGJvS4Idkw91OOBfJTRTzPD7KjAkpZBP8M1dC1oKwo7CuW9ScmAMJQSd6U1suRpRYX9uTOYVqrnx1Tm3ZBKh99ukY9vleZCfv9ccUZC1jvUMQ1b5TrFzQRZA3ml6y5hXpQoUVsVi3J84RONiQmrQkONEnDOOUAoFvaHhgKCyFLYZA1ar1WJyhJqoDo4XEY55gZCwjpiQFhZBAZBLCJkmklD9ZCDZCrFvEO1xTMrfS8cw3It')
+        .then(response=>{
+          setEmail(response.data.email)
+          setName(response.data.name)
+          console.log(res)
+      })
+      .catch((e) =>{
+          console.log(e)
+      })
+      })
+      .catch((err) => console.log(err))
 
+  }
 
   const submitCadastro = () => {
-    console.log(email, password)
     axios.post("http://localhost:3001/cadastro", {
-      email: email,
+      name: name,
       password: password,
+      email: email,
+      date: date,
+      cep: cep,
+      acting: acting,
+      workcnpj: workCNPJ,
+      wcep: wcep,
+      institution: institution,
+      courseName: courseName,
+      dateOut: dateOut,
+      dateIn: dateIn,
+
     })
     .then(() => {
+      console.log(name)
+      console.log(email)
       alert("successful to insert")
     })
   }
@@ -64,7 +91,7 @@ function Cadastro(props) {
             <div className="wrap-input">
               <input
                 className={password !== "" ? "has-val input" : "input"}
-                type="email"
+                type="text"
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
@@ -72,6 +99,16 @@ function Cadastro(props) {
               <span className="focus-input" data-placeholder="Password"></span>
             </div>
             <div className="wrap-input">
+              <input
+                className={email !== "" ? "has-val input" : "input"}
+                type="email"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <span className="focus-input" data-placeholder='Email'></span>
+            </div>
+            <div className="wrap-input">     
               <input
                 className={date !== "" ? "has-val input" : "input"}
                 type="date"
@@ -176,7 +213,7 @@ function Cadastro(props) {
             <h5>Outras opçoes de login:</h5>
             <ul className="loginIcons">
                 <li>
-                  <span><FaFacebookSquare style={{width:30,height:50, color:'#3E5D9E', cursor:'pointer'}}/></span>
+                  <span><FaFacebookSquare onClick={() => facebook()} style={{width:30,height:50, color:'#3E5D9E', cursor:'pointer'}}/></span>
                 </li>
                 <li>
                   <span><FcGoogle style={{width:30,height:50,cursor:'pointer'}}/></span>

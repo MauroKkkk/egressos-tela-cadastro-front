@@ -56,6 +56,11 @@ body, html {
     padding: 0 5px;
     font-family: Nunito, sans-serif;
 }
+.nonfocus-input {
+    font-weight: 550;
+    font-size: medium;
+    
+}
 
 .focus-input {
     position: absolute;
